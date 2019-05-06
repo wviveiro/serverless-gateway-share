@@ -2,6 +2,8 @@
 
 After following the example in https://github.com/serverless/serverless/blob/master/docs/providers/aws/events/apigateway.md#share-api-gateway-and-api-resources I noticed my project was returning the error `The specified provider "undefined" does not exist.`.
 
+No `xxxxxxxx` used in this example.
+
 To fix the problem above, the following has to be done:
 
 1. Main `serverless.yml`. Used to create the Gateway that will be shared among multiple services:

@@ -1,0 +1,30 @@
+service: myservice-a # custom name of my service
+
+#####
+# That is the part that is different from the example in 
+# https://github.com/serverless/serverless/blob/master/docs/providers/aws/events/apigateway.md#share-api-gateway-and-api-resources
+#
+# The provider name, runtime and region HAS TO BE SET.
+#####
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: ap-southeast-2 # The region has to be the same of the main service.
+  apiGateway:
+    restApiId:
+      'Fn::ImportValue': MyGatewayName-restApiId # Name of your restApiId set on the main service
+    restApiRootResourceId:
+      'Fn::ImportValue': MyGatewayName-rootResourceId # Name of your rootResourceId set on the main service
+
+#####
+# Functions as per usual.
+#####
+functions:
+  function001:
+    handler: handler.index
+    events:
+      - http:
+          path: /function001
+          method: get
+          cors: true

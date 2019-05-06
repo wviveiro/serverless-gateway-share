@@ -1,0 +1,35 @@
+service: myservice-gateway # This service will create a gateway resource to be used among other services
+
+#####
+# Provider is to be used as per usual.
+#####
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: ap-southeast-2
+
+#####
+# Here is the new part:
+#####
+resources:
+  Resources:
+    MyGatewayName: # Custom name, use whatever you want.
+      Type: AWS::ApiGateway::RestApi # Keep this line as it is.
+      Properties:
+        Name: MyGatewayName # Same custom name used before.
+
+  Outputs:
+    apiGatewayRestApiId:
+      Value:
+        Ref: MyGatewayName # Same custom name used before.
+      Export:
+        Name: MyGatewayName-restApiId # Name of the output of your restApiId.
+
+    apiGatewayRestApiRootResourceId:
+      Value:
+        Fn::GetAtt:
+          - MyGatewayName # Same custom name used before.
+          - RootResourceId # Keep this line as it is.
+      Export:
+        Name: MyGatewayName-rootResourceId # Name of the output of your rootResourceId
